@@ -31,7 +31,16 @@ public class UserService {
 		return repo.insert(obj);
 	}
 	
+	public void deleteById(String id) {
+		findById(id);
+	    repo.deleteById(id);
+	
+	}
+	
+	//UserDTO passa  os objetos para a classe User inserindo os dados no banco .
 	public User fromDTO(UserDTO objDTO) {
 		return  new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
 	}
+	
+	
 }
