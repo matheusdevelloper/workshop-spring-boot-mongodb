@@ -31,12 +31,28 @@ public class UserService {
 		return repo.insert(obj);
 	}
 	
+	//Deleta o usuario pelo o id
 	public void deleteById(String id) {
 		findById(id);
 	    repo.deleteById(id);
 	
 	}
 	
+	//Passando como parametro os novos dados do usuario para atualização
+	public User update(User obj) {
+		User newObj = findById(obj.getId());
+	    updateData(newObj, obj);
+	    return repo.save(newObj);
+	}
+	
+	//Atualiza os dados do usuario
+	private void updateData(User newObj, User obj) {
+		
+		newObj.setName(obj.getName());
+		newObj.setEmail(obj.getEmail());
+		
+	}
+
 	//UserDTO passa  os objetos para a classe User inserindo os dados no banco .
 	public User fromDTO(UserDTO objDTO) {
 		return  new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
