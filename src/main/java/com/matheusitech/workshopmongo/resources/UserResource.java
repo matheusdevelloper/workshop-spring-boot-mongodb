@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.matheusitech.workshopmongo.domain.Post;
 import com.matheusitech.workshopmongo.domain.User;
 import com.matheusitech.workshopmongo.dto.UserDTO;
 import com.matheusitech.workshopmongo.services.UserService;
@@ -54,14 +55,20 @@ public class UserResource {
 		service.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
-	
-	
+
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id) {
 		User obj = service.fromDTO(objDto);
 		obj.setId(id);
 		service.update(obj);
 		return ResponseEntity.noContent().build();
+	}
+
+	// Retorna os posts com o usuário
+	@GetMapping(value = "/{id}/posts")
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+		User obj = service.findById(id);
+		return ResponseEntity.ok().body(obj.getPosts());
 	}
 
 }
